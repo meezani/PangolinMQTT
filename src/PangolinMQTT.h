@@ -202,7 +202,7 @@ class PangolinMQTT {
     public:
         PangolinMQTT();
                 void                connect();
-                bool                connected(){ return PANGO::TCP; };
+                bool                connected(){ return PANGO::TCP?PANGO::TCP->connected():false; };
                 void                disconnect(bool force = false);
                 const char*         getClientId(){ return _clientId.c_str(); }
                 size_t inline       getMaxPayloadSize(){ return (PANGO::_HAL_getFreeHeap() / 2) - PANGO_HEAP_SAFETY; }

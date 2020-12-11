@@ -283,7 +283,13 @@ void PangolinMQTT::_onPoll(AsyncClient* client) {
 }
 
 void PangolinMQTT::connect() {
-    if(PANGO::TCP) return;
+    if(PANGO::TCP)
+    {
+        if (PANGO::TCP->connected())
+            return;
+        else
+            disconnect(true);       // Disconnect if it initialized a 'fake' TCP connection.
+    }
     if(_clientId=="") _clientId=PANGO::_HAL_getUniqueId();
     PANGO_PRINT("CONNECT as %s FH=%u session=%d\n",_clientId.c_str(),PANGO::_HAL_getFreeHeap(),_cleanSession);
     if(_cleanSession) _cleanStart();
